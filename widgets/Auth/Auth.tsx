@@ -12,14 +12,12 @@ export default function Auth() {
         const check = async () => {
             try {
             const data = await authService.main('login', {
-                first_name: window.Telegram.WebApp.initDataUnsafe.user.first_name,
-                last_name:window.Telegram.WebApp.initDataUnsafe.user.last_name
+                telegram_id: window.Telegram.WebApp.initDataUnsafe.user.id
             })
             router.push(PUBLIC_URL.root())
         } catch(e) {
             const data = await authService.main('register', {
-                first_name: window.Telegram.WebApp.initDataUnsafe.user.first_name,
-                last_name:window.Telegram.WebApp.initDataUnsafe.user.last_name
+                telegram_id: window.Telegram.WebApp.initDataUnsafe.user.id
             })
             router.push(PUBLIC_URL.root())
         }

@@ -11,15 +11,7 @@ export default function CreateCharacter() {
   
   const [loading, setLoading] = useState(false)
   let nameInput = useInputValidation('', {isEmpty: {value: true, message: 'У ассистента ведь должно быть имя, правильно?'}})
-  useEffect(() => {
-    if (done) {
-      window.Telegram.WebApp.sendData(JSON.stringify({
-        appearance: appearanceInput.value,
-        name: nameInput.value,
-        nature: natureInput.value
-      }))
-    }
-  }, [done])
+
   let natureInput = useInputValidation('', {isEmpty: {value: true, message: 'Пропиши характер персонажа'}})
   let appearanceInput = useInputValidation('', {isEmpty: {value: true, message: 'Опиши внешность персонажа'}})
   const avatars = ["🙅","🤖", "👨", "👩", "🧑", "👦", "👧", "🐱", "🐶", "🦊", "🐼", "🦁", "🐸", "🐙", "👽", "🎭", "🎪"]
@@ -55,7 +47,9 @@ export default function CreateCharacter() {
       })
       
       setLoading(false)
-      setDone(true)
+      if (window.Telegram.WebApp.window.Telegram.WebApp.close) {
+      window.Telegram.WebApp.window.Telegram.WebApp.close()
+    }
     }
 
   return (

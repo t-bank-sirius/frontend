@@ -27,5 +27,15 @@ class UserService {
         })
         return response
     }
+    async chooseCharacter(data: {character_id: string}) {
+        const response = await axiosWithAuth<ICharacter>({
+            url: API_URL.user('/choose-character'),
+            method: 'POST',
+            data
+        })
+        return response
+    }
+
+    
 }
 export const userService = new UserService()

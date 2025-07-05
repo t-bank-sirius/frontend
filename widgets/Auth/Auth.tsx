@@ -11,15 +11,16 @@ export default function Auth() {
     useEffect(() => {
         const check = async () => {
             try {
+                console.log(window.Telegram.WebApp)
             const data = await authService.main('login', {
-                first_name: window.Telegram.WebApp.initDataUnsafe.user.first_name,
-                last_name:window.Telegram.WebApp.initDataUnsafe.user.last_name
+                id: window.Telegram.WebApp.initDataUnsafe.user.id,
+                hash: window.Telegram.WebApp.initDataUnsafe.hash
             })
             router.push(PUBLIC_URL.root())
         } catch(e) {
             const data = await authService.main('register', {
-                first_name: window.Telegram.WebApp.initDataUnsafe.user.first_name,
-                last_name:window.Telegram.WebApp.initDataUnsafe.user.last_name
+                id: window.Telegram.WebApp.initDataUnsafe.user.id,
+                hash: window.Telegram.WebApp.initDataUnsafe.hash
             })
             router.push(PUBLIC_URL.root())
         }

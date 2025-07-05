@@ -8,6 +8,6 @@ export interface IUser {
     chosen_character: ICharacter
 }
 export interface UserCreation {
-    first_name: string
-    last_name: string
+    id: number,
+    hash: string
 }

@@ -1,5 +1,5 @@
 import { IAuthForm, IAuthResponse } from "@/enities"
-import { API_URL, axiosClassic } from "@/shared"
+import { API_URL, axiosClassic, axiosWithAuth } from "@/shared"
 import { removeFromStorage, saveTokenStorage } from "./auth-token.service"
 import { UserCreation } from "@/enities/User/types/user.interface"
 
@@ -31,7 +31,7 @@ class AuthService {
 	}
 
 	async logout() {
-		const response = await axiosClassic<boolean>({
+		const response = await axiosWithAuth<boolean>({
 			url: API_URL.auth('/logout'),
 			method: 'POST'
 		})

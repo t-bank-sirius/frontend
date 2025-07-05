@@ -9,4 +9,5 @@ export interface IUser {
 }
 export interface UserCreation {
     telegram_id: string
+    hash: string
 }

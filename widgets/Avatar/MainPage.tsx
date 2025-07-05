@@ -3,15 +3,20 @@ import { ICharacter } from "@/enities"
 import { userService } from "@/features/User/service/user.service"
 import { CharacterCard, PUBLIC_URL, useTelegramInitData } from "@/shared"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function CharacterSelection({characters}: {characters: ICharacter[]}) {
   const [done, setDone] = useState(false)
+  const router = useRouter()
   const [chosenId, setChosenId] = useState('')
   // useEffect(() => {
   //   alert(JSON.stringify(window.Telegram.WebApp.viewportHeight))
   // }, [])
   const onClick = async (id: string) => {
+    if (id == 'create-character') {
+      router.push(PUBLIC_URL.create_character())
+    }
     const data = await userService.chooseCharacter({character_id: id})
     console.log(data)
     if (window.Telegram.WebApp.window.Telegram.WebApp.close) {
@@ -28,7 +33,28 @@ export default function CharacterSelection({characters}: {characters: ICharacter
 
       {/* Title Section */}
       <div className="text-center mb-8 text-white">
-        <h1 className="text-3xl font-bold mb-2">Выбери персонажа</h1>
+        <h1 className="text-3xl font-bold mb-2 text-center">
+          С кем хочешь
+          <br />
+          пообщаться сегодня?
+        </h1>
+      </div>
+
+      {/* Character Cards */}
+      <div className="w-full max-w-md space-y-4">
+        {characters.map((character) => (
+          <CharacterCard
+            name={character.name}
+            subtitle={character.subtitle || ''}
+            avatar={character.avatar_img_url}
+            bg_color={character.bg_color}
+            onClick={async () => await onClick(character.id)}
+          />
+        ))}
+      </div>
+
+      {/* Test Loading Page Link */}
+      <div className="mt-8">
         <Link
           href={PUBLIC_URL.create_character()}
           className="text-lg opacity-90 hover:opacity-100 transition-opacity duration-200 cursor-pointer group"
@@ -37,18 +63,6 @@ export default function CharacterSelection({characters}: {characters: ICharacter
             или создай своего
           </span>
         </Link>
-      </div>
-
-      {/* Character Cards */}
-      <div className="w-full max-w-md space-y-4">
-        {characters.map((character) => (
-          <CharacterCard
-            name={character.name}
-            subtitle={character.nature}
-            avatar={character.avatar}
-            onClick={async () => await onClick(character.id)}
-          />
-        ))}
       </div>
     </div>
   )

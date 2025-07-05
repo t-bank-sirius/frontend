@@ -2,14 +2,16 @@ import { IAuthForm, IAuthResponse } from "@/enities"
 import { API_URL, axiosClassic, axiosWithAuth } from "@/shared"
 import { removeFromStorage, saveTokenStorage } from "./auth-token.service"
 import { UserCreation } from "@/enities/User/types/user.interface"
+import { AxiosHeaders } from "axios"
 
 
 class AuthService {
-	async main(type: 'login' | 'register', data: UserCreation) {
+	async main(type: 'login' | 'register', data: UserCreation, cookie?: any) {
 		const response = await axiosClassic<IAuthResponse>({
 			url: API_URL.auth(`/${type}`),
 			method: 'POST',
-			data
+			data,
+			headers: cookie ? {Cookie: cookie}: {}
 		})
 
 		if (response.data.accessToken)

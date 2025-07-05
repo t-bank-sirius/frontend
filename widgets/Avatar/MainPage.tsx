@@ -1,5 +1,6 @@
 "use client"
 import { ICharacter } from "@/enities"
+import { userService } from "@/features/User/service/user.service"
 import { CharacterCard, PUBLIC_URL, useTelegramInitData } from "@/shared"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -10,13 +11,13 @@ export default function CharacterSelection({characters}: {characters: ICharacter
   // useEffect(() => {
   //   alert(JSON.stringify(window.Telegram.WebApp.viewportHeight))
   // }, [])
-  useEffect(() => {
-    if (chosenId) {
-      window.Telegram.WebApp.sendData(JSON.stringify('Выбран аватар с id: ' + chosenId))
+  const onClick = async (id: string) => {
+    const data = await userService.chooseCharacter({character_id: id})
+    console.log(data)
+    if (window.Telegram.WebApp.window.Telegram.WebApp.close) {
+      window.Telegram.WebApp.window.Telegram.WebApp.close()
     }
-  }, [chosenId])
-  const onClick = (id: string) => {
-    setChosenId(id)
+    
   }
   
 
@@ -45,7 +46,7 @@ export default function CharacterSelection({characters}: {characters: ICharacter
             name={character.name}
             subtitle={character.nature}
             avatar={character.avatar}
-            onClick={() => onClick(character.id)}
+            onClick={async () => await onClick(character.id)}
           />
         ))}
       </div>

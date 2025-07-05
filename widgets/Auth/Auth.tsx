@@ -13,14 +13,12 @@ export default function Auth() {
             try {
                 console.log(window.Telegram.WebApp)
             const data = await authService.main('login', {
-                id: window.Telegram.WebApp.initDataUnsafe.user.id,
-                hash: window.Telegram.WebApp.initDataUnsafe.hash
+                telegram_id: window.Telegram.WebApp.initDataUnsafe.user.id
             })
             router.push(PUBLIC_URL.root())
         } catch(e) {
             const data = await authService.main('register', {
-                id: window.Telegram.WebApp.initDataUnsafe.user.id,
-                hash: window.Telegram.WebApp.initDataUnsafe.hash
+                telegram_id: window.Telegram.WebApp.initDataUnsafe.user.id
             })
             router.push(PUBLIC_URL.root())
         }

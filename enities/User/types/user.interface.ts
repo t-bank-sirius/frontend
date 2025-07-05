@@ -8,6 +8,5 @@ export interface IUser {
     chosen_character: ICharacter
 }
 export interface UserCreation {
-    telegram_id: string
-    hash: string
+    initData: string
 }

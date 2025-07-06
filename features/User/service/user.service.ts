@@ -3,35 +3,39 @@ import { CreateCharacter } from "@/enities/Character/types/character.interface"
 import { API_URL, axiosWithAuth } from "@/shared"
 
 class UserService {
-    async getCharactersByUser() {
+    async getCharactersByUser(cookie?: any) {
 		const response = await axiosWithAuth<ICharacter[]>({
 			url: API_URL.user('/get-characters'),
-			method: 'GET'
+			method: 'GET',
+            headers: cookie ? {Cookie: cookie}: {}
 		})
 
 		return response
 	}
-    async getCharacterByUser() {
+    async getCharacterByUser(cookie?: any) {
         const response = await axiosWithAuth<ICharacter>({
             url: API_URL.user('/get-character'),
-            method: 'GET'
+            method: 'GET',
+            headers: cookie ? {Cookie: cookie}: {}
         })
 
         return response
     }
-    async createUserCharacter(data: CreateCharacter) {
+    async createUserCharacter(data: CreateCharacter, cookie?: any) {
         const response = await axiosWithAuth<ICharacter>({
             url: API_URL.user('/new-character'),
             method: 'POST',
-            data
+            data,
+            headers: cookie ? {Cookie: cookie}: {}
         })
         return response
     }
-    async chooseCharacter(data: {character_id: string}) {
+    async chooseCharacter(data: {character_id: string}, cookie?: any) {
         const response = await axiosWithAuth<ICharacter>({
             url: API_URL.user('/choose-character'),
             method: 'POST',
-            data
+            data,
+            headers: cookie ? {Cookie: cookie}: {}
         })
         return response
     }

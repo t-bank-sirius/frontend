@@ -8,7 +8,7 @@ interface GenerationViewProps {
   characterData: CreateCharacter
   onRedo: () => void
   onChange: () => void
-  onComplete: () => void
+  onComplete: () => Promise<void>
 }
 
 export function GenerationView({ characterData, onRedo, onChange, onComplete }: GenerationViewProps) {

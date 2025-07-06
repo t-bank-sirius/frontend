@@ -56,11 +56,11 @@ export default function CharacterSelection({characters}: {characters: ICharacter
       {/* Test Loading Page Link */}
       <div className="mt-8">
         <Link
-          href={PUBLIC_URL.create_character()}
+          href={PUBLIC_URL.assistants()}
           className="text-lg opacity-90 hover:opacity-100 transition-opacity duration-200 cursor-pointer group"
         >
           <span className="underline decoration-2 underline-offset-4 decoration-white/60 group-hover:decoration-white italic font-medium">
-            или создай своего
+            Мои персонажи
           </span>
         </Link>
       </div>

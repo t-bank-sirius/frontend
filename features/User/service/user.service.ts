@@ -3,9 +3,9 @@ import { CreateCharacter } from "@/enities/Character/types/character.interface"
 import { API_URL, axiosWithAuth } from "@/shared"
 
 class UserService {
-    async getCharactersByUser(cookie?: any) {
+    async getCharactersByUser(cookie?: any, owns: 'true' | 'false' = 'false') {
 		const response = await axiosWithAuth<ICharacter[]>({
-			url: API_URL.user('/get-characters'),
+			url: API_URL.user(`/get-characters?owns=${owns}`),
 			method: 'GET',
             headers: cookie ? {Cookie: cookie}: {}
 		})

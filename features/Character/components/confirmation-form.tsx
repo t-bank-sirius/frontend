@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Avatar } from "@/enities/Character/types/character.interface"
 import type { CreateCharacter } from "@/enities/Character/types/character.interface"
+import toast from "react-hot-toast"
 interface CharacterFormProps {
   onSubmit: (data: CreateCharacter) => void
   initialData?: CreateCharacter | null
@@ -13,6 +14,7 @@ interface CharacterFormProps {
 
 export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
   const avatars: Avatar[] = [
+    { emoji: "🙅", description: "Создаётся новый персонаж!"},
     { emoji: "🤖", description: "Робот - технологичный и логичный персонаж" },
     { emoji: "👨", description: "Мужчина - классический дружелюбный персонаж" },
     { emoji: "👩", description: "Женщина - элегантная и умная собеседница" },
@@ -132,6 +134,9 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
   }
 
   const handleSubmit = (e: React.FormEvent) => {
+    if (!characterName || !selectedSex || !selectedInterests || !selectedAbilities || ! selectedPlaces || !additionalDetails) {
+        toast('Проверьте запонение полей!')
+    }
     e.preventDefault()
     const data: CreateCharacter = {
         avatar_img_url: '', //generated image

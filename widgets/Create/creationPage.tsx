@@ -8,11 +8,15 @@ import { CharacterForm } from "@/features/Character/components/confirmation-form
 import { CreateCharacter } from "@/enities/Character/types/character.interface"
 import { ConfirmationView } from "@/shared/components/confirmation-view"
 import { GenerationView } from "@/shared/components/generation-view"
+import { userService } from "@/features/User/service/user.service"
+import { useRouter } from "next/navigation"
+import { PUBLIC_URL } from "@/shared"
 
 export default function CreateACharacter() {
   const [currentStep, setCurrentStep] = useState<"form" | "confirmation" | "generation">("form")
   const [characterData, setCharacterData] = useState<CreateCharacter | null>(null)
 
+  const router = useRouter()
   const handleFormSubmit = (data: CreateCharacter) => {
     setCharacterData(data)
     setCurrentStep("confirmation")
@@ -30,9 +34,12 @@ export default function CreateACharacter() {
     setCurrentStep("confirmation")
   }
 
-  const handleGenerationComplete = () => {
+  const handleGenerationComplete = async () => {
     // Navigate back to main page or wherever needed
-    window.location.href = "/"
+    if (characterData) {
+    const data = await userService.createUserCharacter(characterData)
+    router.push(PUBLIC_URL.assistants())
+    }
   }
 
   return (
@@ -76,7 +83,7 @@ export default function CreateACharacter() {
           characterData={characterData}
           onRedo={() => setCurrentStep("generation")}
           onChange={handleBackToForm}
-          onComplete={handleGenerationComplete}
+          onComplete={async () => await handleGenerationComplete()}
         />
       )}
     </div>

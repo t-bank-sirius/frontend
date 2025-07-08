@@ -5,5 +5,6 @@ export const PUBLIC_URL = {
 
 	home: () => PUBLIC_URL.root('/'),
 	auth: () => PUBLIC_URL.root('/auth'),
-	create_character: () => PUBLIC_URL.root('/create-character')
+	create_character: () => PUBLIC_URL.root('/create-character'),
+	assistants: () => PUBLIC_URL.root('/assistants')
 }

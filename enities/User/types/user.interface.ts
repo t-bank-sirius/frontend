@@ -7,6 +7,7 @@ export interface IUser {
     characters: ICharacter[]
     chosen_character: ICharacter
 }
+
 export interface UserCreation {
     initData: string
 }

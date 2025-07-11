@@ -4,8 +4,21 @@ import { Plus } from "lucide-react"
 import { ICharacter } from "@/enities"
 import { CharacterCard } from "@/shared"
 import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { userService } from "@/features/User/service/user.service"
+import { Loading } from "@/features"
 
-export default function UserAssistants({characters}: {characters: ICharacter[]}) {
+export default function UserAssistants() {
+   const [characters, setCharacters] = useState<ICharacter[]>([])
+    const [isLoading, setLoading] = useState(true)
+    useEffect(() => {
+      const init = async () => {
+        const data = await userService.getCharactersByUser('', 'true')
+        setCharacters(data.data)
+        setLoading(false)
+      }
+      init()
+    }, [])
     const router = useRouter()
   const handleAssistantClick = async (id: string) => {
     // Here you would navigate to chat with the assistant
@@ -15,6 +28,9 @@ export default function UserAssistants({characters}: {characters: ICharacter[]})
     window.location.href = "/create-character"
   }
 
+  if (isLoading) {
+    return <Loading/>
+  }
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-400 via-orange-500 via-30% to-black flex flex-col items-center justify-center p-4">
       {/* Back Button */}

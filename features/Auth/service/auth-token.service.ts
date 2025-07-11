@@ -6,18 +6,19 @@ export enum EnumTokens {
 }
 
 export const getAccessToken = () => {
-	const accessToken = Cookies.get(EnumTokens.ACCESS_TOKEN)
+	const accessToken = localStorage.getItem(EnumTokens.ACCESS_TOKEN)
 	return accessToken || null
 }
 
 export const saveTokenStorage = (accessToken: string) => {
-	Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {
-		domain: process.env.APP_DOMAIN,
-		sameSite: 'strict',
-		expires: 1
-	})
+	localStorage.setItem(EnumTokens.ACCESS_TOKEN, accessToken)
+	// Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {
+	// 	domain: process.env.APP_DOMAIN,
+	// 	sameSite: 'strict',
+	// 	expires: 1
+	// })
 }
 
 export const removeFromStorage = () => {
-	Cookies.remove(EnumTokens.ACCESS_TOKEN)
+	localStorage.removeItem(EnumTokens.ACCESS_TOKEN)
 }

@@ -6,8 +6,7 @@ class UserService {
     async getCharactersByUser(cookie?: any, owns: 'true' | 'false' = 'false') {
 		const response = await axiosWithAuth<ICharacter[]>({
 			url: API_URL.user(`/get-characters?owns=${owns}`),
-			method: 'GET',
-            headers: cookie ? {Cookie: cookie}: {}
+			method: 'GET'
 		})
 
 		return response
@@ -16,7 +15,6 @@ class UserService {
         const response = await axiosWithAuth<ICharacter>({
             url: API_URL.user('/get-character'),
             method: 'GET',
-            headers: cookie ? {Cookie: cookie}: {}
         })
 
         return response
@@ -26,7 +24,6 @@ class UserService {
             url: API_URL.user('/new-character'),
             method: 'POST',
             data,
-            headers: cookie ? {Cookie: cookie}: {}
         })
         return response
     }
@@ -35,7 +32,6 @@ class UserService {
             url: API_URL.user('/choose-character'),
             method: 'POST',
             data,
-            headers: cookie ? {Cookie: cookie}: {}
         })
         return response
     }

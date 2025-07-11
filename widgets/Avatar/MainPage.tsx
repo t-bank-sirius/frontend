@@ -1,12 +1,23 @@
 "use client"
 import { ICharacter } from "@/enities"
+import { Loading } from "@/features"
 import { userService } from "@/features/User/service/user.service"
 import { CharacterCard, PUBLIC_URL, useTelegramInitData } from "@/shared"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
-export default function CharacterSelection({characters}: {characters: ICharacter[]}) {
+export default function CharacterSelection() {
+  const [characters, setCharacters] = useState<ICharacter[]>([])
+  const [isLoading, setLoading] = useState(true)
+  useEffect(() => {
+    const init = async () => {
+      const data = await userService.getCharactersByUser()
+      setCharacters(data.data)
+      setLoading(false)
+    }
+    init()
+  }, [])
   const [done, setDone] = useState(false)
   const router = useRouter()
   const [chosenId, setChosenId] = useState('')
@@ -24,7 +35,9 @@ export default function CharacterSelection({characters}: {characters: ICharacter
     }
     
   }
-  
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-400 via-orange-500 via-30% to-black flex flex-col items-center justify-center p-4">

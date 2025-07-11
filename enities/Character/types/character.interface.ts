@@ -4,18 +4,16 @@ export type Avatar = {
 }
 export interface ICharacter {
     id: string
-    avatar_img_url: string
+    avatar_img_url: string //Отправлется С ФРОНТА НА СЕРВЕР (ссылка формируется строго на фронте)
+    // В js работает как URL.createObjectURL(blob);
   name: string
-  sex: string
-  interests: string[]
-  abilities: string[]
-  places: string[]
-  additionalDetails: string
-    // appearance: string
-    subtitle?: string //пока только у изначальных
+  system_prompt: string
+    init_message: string
     is_generated: boolean 
-    bg_color?: string //не храни в БД!!!
+    subtitle?: string
+    bg_color?: string //не трогай это поле в БД, оставь это фронту
 }
+
 export interface CreateCharacter {
   avatar_img_url: string
   shape: Avatar

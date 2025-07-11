@@ -15,12 +15,12 @@ export default function Auth() {
             const data = await authService.main('login', {
                 initData: window.Telegram.WebApp.initData
             })
-            router.push(PUBLIC_URL.root())
+            router.push(PUBLIC_URL.home())
         } catch(e) {
             const data = await authService.main('register', {
                 initData: window.Telegram.WebApp.initData
             })
-            router.push(PUBLIC_URL.root())
+            router.push(PUBLIC_URL.home())
         }
         }
         check()

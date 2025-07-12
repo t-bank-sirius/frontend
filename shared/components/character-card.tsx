@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+
 interface CharacterCardProps {
   name: string
   subtitle: string
@@ -15,8 +17,8 @@ export function CharacterCard({ name, subtitle, avatar, onClick, bg_color }: Cha
       className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex items-center space-x-4 text-left text-white hover:bg-white/20 hover:scale-105 transform transition-all duration-300 ease-out active:scale-95 shadow-lg hover:shadow-xl"
     >
       {/* Avatar */}
-      <div className={`w-16 h-16 ${bg_color ? bg_color : "bg-yellow-600"} rounded-2xl flex items-center justify-center text-2xl shadow-lg`}>
-        {avatar}
+      <div className={`w-16 h-16 ${bg_color ? bg_color : "bg-yellow-600"} rounded-2xl flex items-center justify-center shadow-lg overflow-hidden`}>
+        <Image src={avatar || "/placeholder.svg"} alt={name} className="w-12 h-12 object-cover rounded-xl" />
       </div>
 
       {/* Text Content */}

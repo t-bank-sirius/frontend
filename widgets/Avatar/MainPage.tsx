@@ -30,8 +30,8 @@ export default function CharacterSelection() {
     }
     const data = await userService.chooseCharacter({character_id: id})
     console.log(data)
-    if (window.Telegram.WebApp.window.Telegram.WebApp.close) {
-      window.Telegram.WebApp.window.Telegram.WebApp.close()
+    if (window.Telegram.WebApp.close) {
+      window.Telegram.WebApp.close()
     }
     
   }

@@ -18,7 +18,9 @@ export function CharacterCard({ name, subtitle, avatar, onClick, bg_color }: Cha
     >
       {/* Avatar */}
       <div className={`w-16 h-16 ${bg_color ? bg_color : "bg-yellow-600"} rounded-2xl flex items-center justify-center shadow-lg overflow-hidden`}>
-        <Image src={avatar || "/placeholder.svg"} alt={name} className="w-12 h-12 object-cover rounded-xl" />
+        {avatar == "➕" && "➕"}
+        {avatar != "➕" && <img src={avatar || "/placeholder.svg"} alt={name} className="w-12 h-12 object-cover rounded-xl" />}
+        
       </div>
 
       {/* Text Content */}

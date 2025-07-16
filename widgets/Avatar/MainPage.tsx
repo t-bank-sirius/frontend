@@ -24,6 +24,9 @@ export default function CharacterSelection() {
   // useEffect(() => {
   //   alert(JSON.stringify(window.Telegram.WebApp.viewportHeight))
   // }, [])
+  const handleCreateNew = () => {
+    window.location.href = "/create-character"
+  }
   const onClick = async (id: string) => {
     if (id == 'create-character') {
       router.push(PUBLIC_URL.create_character())
@@ -64,6 +67,13 @@ export default function CharacterSelection() {
             onClick={async () => await onClick(character.id)}
           />
         ))}
+        <CharacterCard
+          name="Создать нового ассистента"
+          subtitle="Добавь еще одного помощника"
+          avatar="➕"
+          bg_color="bg-orange-500"
+          onClick={handleCreateNew}
+        />
       </div>
 
       {/* Test Loading Page Link */}

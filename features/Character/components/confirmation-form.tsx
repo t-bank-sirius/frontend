@@ -134,10 +134,12 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
   }
 
   const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
     if (!characterName || !selectedSex || !selectedInterests || !selectedAbilities || ! selectedPlaces || !additionalDetails) {
         toast('Проверьте запонение полей!')
+        return
     }
-    e.preventDefault()
+    
     const data: CreateCharacter = {
         avatar_img_url: '', //generated image
       shape: avatars[currentIndex],
@@ -193,7 +195,7 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
 
       {/* Avatar Carousel */}
       <div className="w-full max-w-md mb-8">
-        <h2 className="block text-white text-xl font-semibold mb-2 text-center">Выберите аватар</h2>
+        <h2 className="block text-white text-xl font-semibold mb-2 text-center">Выберите облик</h2>
         <p className="text-white/40 text-sm text-center mb-6">оставьте 🙅, если хотите создать кого-то нового</p>
 
         <div className="flex items-center justify-center space-x-4">

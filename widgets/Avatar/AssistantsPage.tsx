@@ -83,25 +83,25 @@ export default function UserAssistants() {
       {characters.length === 0 && (
         <div className="text-center mt-8 text-white/60">
           <p className="text-lg mb-4">У тебя пока нет ассистентов</p>
-          <button
+          {/* <button
             onClick={handleCreateNew}
             className="inline-flex items-center space-x-2 text-white/80 hover:text-white underline transition-colors duration-200"
           >
             <Plus size={16} />
             <span>Создать первого ассистента</span>
-          </button>
+          </button> */}
         </div>
       )}
 
       {/* Additional Options */}
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <Link
           href="/loading"
           className="text-white/60 hover:text-white text-sm underline transition-colors duration-200 decoration-white/60 hover:decoration-white underline-offset-2"
         >
           тест страницы загрузки
         </Link>
-      </div>
+      </div> */}
     </div>
   )
 }

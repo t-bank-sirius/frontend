@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   env: {
     APP_URL: process.env.APP_URL,
     SERVER_URL: process.env.SERVER_URL
-  }
-  /* config options here */
+  },
+  output: "standalone",
 };
 
 export default nextConfig;

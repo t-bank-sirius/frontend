@@ -24,3 +24,12 @@ export interface CreateCharacter {
   places: string[]
   additionalDetails: string
 }
+export interface CreateAvatar {
+  shape: Avatar
+  name: string
+  sex: string
+  interests: string[]
+  abilities: string[]
+  places: string[]
+  additionalDetails: string
+}

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { RotateCcw, Edit, Check } from "lucide-react"
 import { CreateCharacter } from "@/enities/Character/types/character.interface"
+import { userService } from "@/features/User/service/user.service"
 
 interface GenerationViewProps {
   characterData: CreateCharacter
@@ -12,31 +13,47 @@ interface GenerationViewProps {
 }
 
 export function GenerationView({ characterData, onRedo, onChange, onComplete }: GenerationViewProps) {
+  function convertBase64ToBlob(base64Image: string) {
+  // Split into two parts
+  const parts = base64Image.split(';base64,');
+
+  // Hold the content type
+  const imageType = parts[0].split(':')[1];
+
+  // Decode Base64 string
+  const decodedData = window.atob(parts[1]);
+
+  // Create UNIT8ARRAY of size same as row data length
+  const uInt8Array = new Uint8Array(decodedData.length);
+
+  // Insert all character code into uInt8Array
+  for (let i = 0; i < decodedData.length; ++i) {
+    uInt8Array[i] = decodedData.charCodeAt(i);
+  }
+
+  // Return BLOB image after conversion
+  return new Blob([uInt8Array], { type: imageType });
+}
   const [isLoading, setIsLoading] = useState(true)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
-
-  useEffect(() => {
-    // Simulate server request with 3 second delay
-    const timer = setTimeout(() => {
+const gen = async () => {
+      const data = await userService.createAvatar(characterData)
+      
       setIsLoading(false)
-      // Use a placeholder image for demonstration
-      setGeneratedImage("/placeholder.svg?height=300&width=300")
-    }, 3000)
+      const blob = convertBase64ToBlob(data.data.image)
+      setGeneratedImage(URL.createObjectURL(blob))
+    }
+  useEffect(() => {
+    
+    gen()
 
-    return () => clearTimeout(timer)
   }, [])
 
   const handleRedo = () => {
     setIsLoading(true)
     setGeneratedImage(null)
 
-    // Simulate another server request
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-      setGeneratedImage("/placeholder.svg?height=300&width=300")
-    }, 3000)
-
-    return () => clearTimeout(timer)
+    gen()
   }
 
   return (

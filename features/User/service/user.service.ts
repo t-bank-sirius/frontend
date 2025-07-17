@@ -1,5 +1,5 @@
 import { ICharacter } from "@/enities"
-import { CreateCharacter } from "@/enities/Character/types/character.interface"
+import { CreateAvatar, CreateCharacter } from "@/enities/Character/types/character.interface"
 import { API_URL, axiosWithAuth } from "@/shared"
 
 class UserService {
@@ -32,6 +32,14 @@ class UserService {
             url: API_URL.user('/choose-character'),
             method: 'POST',
             data,
+        })
+        return response
+    }
+    async createAvatar(data: CreateAvatar) {
+        const response = await axiosWithAuth<{image: string}>({
+            url: API_URL.user('/create-avatar'),
+            method: 'POST',
+            data
         })
         return response
     }

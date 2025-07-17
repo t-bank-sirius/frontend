@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { RotateCcw, Edit, Check } from "lucide-react"
 import { CreateCharacter } from "@/enities/Character/types/character.interface"
+import { useRouter } from "next/navigation"
 
 interface GenerationViewProps {
   characterData: CreateCharacter
@@ -12,9 +13,9 @@ interface GenerationViewProps {
 }
 
 export function GenerationView({ characterData, onRedo, onChange, onComplete }: GenerationViewProps) {
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
-
   useEffect(() => {
     // Simulate server request with 3 second delay
     const timer = setTimeout(() => {
@@ -25,6 +26,10 @@ export function GenerationView({ characterData, onRedo, onChange, onComplete }: 
 
     return () => clearTimeout(timer)
   }, [])
+  const complete = async () => {
+    await onComplete()
+    router.push("/assistants")
+  }
 
   const handleRedo = () => {
     setIsLoading(true)
@@ -107,7 +112,7 @@ export function GenerationView({ characterData, onRedo, onChange, onComplete }: 
               </button>
             </div>
             <button
-              onClick={onComplete}
+              onClick={async () => await complete()}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center space-x-2"
             >
               <Check size={18} />

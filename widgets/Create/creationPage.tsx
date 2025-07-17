@@ -38,7 +38,7 @@ export default function CreateACharacter() {
     // Navigate back to main page or wherever needed
     if (characterData) {
     const data = await userService.createUserCharacter(characterData)
-    router.push(PUBLIC_URL.assistants())
+    router.push("/assistants")
     }
   }
 

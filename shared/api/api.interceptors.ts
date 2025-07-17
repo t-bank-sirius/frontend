@@ -6,8 +6,8 @@ import { authService, getAccessToken, removeFromStorage } from "@/features"
 
 const options: CreateAxiosDefaults = {
 	baseURL: SERVER_URL,
-	headers: getContentType(),
-	withCredentials: true
+	headers: {'ngrok-skip-browser-warning': '123456', ...getContentType()}, // Убрать на продакшене
+	withCredentials: true // Если что - убрать
 }
 
 const axiosClassic = axios.create(options)

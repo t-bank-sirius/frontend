@@ -13,6 +13,8 @@ interface GenerationViewProps {
 }
 
 export function GenerationView({ characterData, onRedo, onChange, onComplete }: GenerationViewProps) {
+  const [isLoading, setIsLoading] = useState(true)
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   function convertBase64ToBlob(base64Image: string) {
   // Split into two parts
   const parts = base64Image.split(';base64,');
@@ -34,20 +36,21 @@ export function GenerationView({ characterData, onRedo, onChange, onComplete }: 
   // Return BLOB image after conversion
   return new Blob([uInt8Array], { type: imageType });
 }
-  const [isLoading, setIsLoading] = useState(true)
-  const [generatedImage, setGeneratedImage] = useState<string | null>(null)
-const gen = async () => {
-      const data = await userService.createAvatar(characterData)
-      
-      setIsLoading(false)
+  const gen = async () => {
+    const data = await userService.createAvatar(characterData)
+    setIsLoading(false)
       const blob = convertBase64ToBlob(data.data.image)
       setGeneratedImage(URL.createObjectURL(blob))
-    }
+  }
   useEffect(() => {
     
     gen()
 
   }, [])
+  const complete = async () => {
+    await onComplete()
+    window.location.href = "/assistants"
+  }
 
   const handleRedo = () => {
     setIsLoading(true)
@@ -124,7 +127,7 @@ const gen = async () => {
               </button>
             </div>
             <button
-              onClick={onComplete}
+              onClick={async () => await complete()}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center space-x-2"
             >
               <Check size={18} />
@@ -136,3 +139,7 @@ const gen = async () => {
     </>
   )
 }
+    function convertBase64ToBlob(image: string) {
+      throw new Error("Function not implemented.")
+    }
+

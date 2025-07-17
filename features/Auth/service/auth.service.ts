@@ -1,4 +1,4 @@
-import { IAuthForm, IAuthResponse } from "@/enities"
+import { IAuthResponse } from "@/enities"
 import { API_URL, axiosClassic, axiosWithAuth } from "@/shared"
 import { removeFromStorage, saveTokenStorage } from "./auth-token.service"
 import { UserCreation } from "@/enities/User/types/user.interface"

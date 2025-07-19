@@ -21,7 +21,11 @@ export default function UserAssistants() {
     }, [])
     const router = useRouter()
   const handleAssistantClick = async (id: string) => {
-    // Here you would navigate to chat with the assistant
+    const data = await userService.chooseCharacter({character_id: id})
+    console.log(data)
+    if (window.Telegram.WebApp.close) {
+      window.Telegram.WebApp.close()
+    }
   }
 
   const handleCreateNew = () => {

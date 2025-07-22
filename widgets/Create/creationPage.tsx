@@ -37,6 +37,7 @@ export default function CreateACharacter() {
   const handleGenerationComplete = async () => {
     // Navigate back to main page or wherever needed
     if (characterData) {
+    console.log(characterData)
     const data = await userService.createUserCharacter(characterData)
     window.location.href = "/assistants"
     }
@@ -81,6 +82,7 @@ export default function CreateACharacter() {
       {currentStep === "generation" && characterData && (
         <GenerationView
           characterData={characterData}
+          setCharacterData={setCharacterData}
           onRedo={() => setCurrentStep("generation")}
           onChange={handleBackToForm}
           onComplete={async () => await handleGenerationComplete()}

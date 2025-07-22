@@ -10,9 +10,10 @@ interface GenerationViewProps {
   onRedo: () => void
   onChange: () => void
   onComplete: () => Promise<void>
+  setCharacterData: any
 }
 
-export function GenerationView({ characterData, onRedo, onChange, onComplete }: GenerationViewProps) {
+export function GenerationView({ characterData, setCharacterData, onRedo, onChange, onComplete }: GenerationViewProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   function convertBase64ToBlob(base64Image: string) {
@@ -41,6 +42,9 @@ export function GenerationView({ characterData, onRedo, onChange, onComplete }: 
     setIsLoading(false)
       const blob = convertBase64ToBlob(data.data.image)
       setGeneratedImage(URL.createObjectURL(blob))
+      console.log(generatedImage)
+      setCharacterData({...characterData, avatar_img_url: data.data.image})
+      console.log(characterData)
   }
   useEffect(() => {
     

@@ -17,6 +17,8 @@ export interface ICharacter {
 export interface CreateCharacter {
   avatar_img_url: string
   shape: Avatar
+  appearance: string
+  archetypes: string[]
   name: string
   sex: string
   interests: string[]
@@ -28,6 +30,8 @@ export interface CreateAvatar {
   shape: Avatar
   name: string
   sex: string
+  appearance: string
+  archetypes: string[]
   interests: string[]
   abilities: string[]
   places: string[]

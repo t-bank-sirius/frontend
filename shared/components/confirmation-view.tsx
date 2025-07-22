@@ -57,6 +57,9 @@ export function ConfirmationView({ characterData, onConfirm }: ConfirmationViewP
           </div>
         )}
 
+        
+
+
         {/* Abilities */}
         {characterData.abilities.length > 0 && (
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 shadow-lg">
@@ -84,12 +87,31 @@ export function ConfirmationView({ characterData, onConfirm }: ConfirmationViewP
             </div>
           </div>
         )}
+        {characterData.archetypes.length > 0 && (
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 shadow-lg">
+            <h3 className="text-white text-sm font-medium mb-2">Архетипы</h3>
+            <div className="flex flex-wrap gap-2">
+              {characterData.archetypes.map((interest) => (
+                <span key={interest} className="px-2 py-1 bg-orange-500 text-white text-xs rounded-full">
+                  {interest}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Additional Details */}
         {characterData.additionalDetails && (
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 shadow-lg">
             <h3 className="text-white text-sm font-medium mb-2">Дополнительные детали</h3>
             <p className="text-white/80 text-sm">{characterData.additionalDetails}</p>
+          </div>
+        )}
+
+        {characterData.appearance && (
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 shadow-lg">
+            <h3 className="text-white text-sm font-medium mb-2">Внешность</h3>
+            <p className="text-white/80 text-sm">{characterData.appearance}</p>
           </div>
         )}
 

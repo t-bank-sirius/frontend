@@ -48,7 +48,9 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
   const [selectedAbilities, setSelectedAbilities] = useState<string[]>(initialData?.abilities || [])
   const [selectedPlaces, setSelectedPlaces] = useState<string[]>(initialData?.places || [])
   const [characterName, setCharacterName] = useState(initialData?.name || "")
+  const [archetypes, setArchetypes] = useState(initialData?.archetypes || [])
   const [additionalDetails, setAdditionalDetails] = useState(initialData?.additionalDetails || "")
+  const [appearance, setAppearance] = useState(initialData?.appearance || "")
 
   // Update states when initialData changes
   useEffect(() => {
@@ -59,7 +61,9 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
       setSelectedAbilities(initialData.abilities || [])
       setSelectedPlaces(initialData.places || [])
       setCharacterName(initialData.name || "")
+      setArchetypes(initialData.archetypes || [])
       setAdditionalDetails(initialData.additionalDetails || "")
+      setAppearance(initialData.appearance || "")
     }
   }, [initialData])
 
@@ -103,6 +107,23 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
     "Спортзал",
     "Театр",
   ]
+  const archetypes_array = [
+    "меланхоличный",
+    "заботливый",
+    "целеустремленный",
+    "отстраненный",
+    "творческий",
+    "дерзкий",
+    "тихоня",
+    "в центре внимания",
+    "менеджер",
+    "изобретатель",
+    "логик",
+    "гений",
+    "путешественник",
+    "дисциплинированный",
+    "простодушный"
+            ]
 
   const nextAvatar = () => {
     setCurrentIndex((prev) => (prev + 1) % avatars.length)
@@ -135,13 +156,15 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!characterName || !selectedSex || !selectedInterests || !selectedAbilities || ! selectedPlaces || !additionalDetails) {
+    if (!characterName || !selectedSex || !selectedInterests.length || !selectedAbilities.length || !selectedPlaces.length || !additionalDetails || !appearance || !archetypes.length) {
         toast('Проверьте запонение полей!')
         return
     }
     
     const data: CreateCharacter = {
         avatar_img_url: '', //generated image
+        archetypes,
+        appearance,
       shape: avatars[currentIndex],
       name: characterName,
       sex: selectedSex,
@@ -321,6 +344,12 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
           selectedItems={selectedPlaces}
           onToggle={(item) => toggleSelection(item, selectedPlaces, setSelectedPlaces)}
         />
+        <ChipSelector
+          title="Архетипы персонажа"
+          items={archetypes_array}
+          selectedItems={archetypes}
+          onToggle={(item) => toggleSelection(item, archetypes, setArchetypes)}
+        />
 
         {/* Additional Details */}
         <div>
@@ -330,6 +359,17 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
             rows={4}
             value={additionalDetails}
             onChange={(e) => setAdditionalDetails(e.target.value)}
+            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent resize-none"
+          />
+        </div>
+
+        <div>
+          <label className="block text-white text-sm font-medium mb-2">Внешность</label>
+          <textarea
+            placeholder="Цвет глаз, длина волос..."
+            rows={4}
+            value={appearance}
+            onChange={(e) => setAppearance(e.target.value)}
             className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent resize-none"
           />
         </div>

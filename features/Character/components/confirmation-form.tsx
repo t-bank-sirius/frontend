@@ -264,6 +264,10 @@ export function CharacterForm({ onSubmit, initialData }: CharacterFormProps) {
           </button>
         </div>
 
+        <div className="mt-4 text-center">
+          <p className="text-white/70 text-sm px-6 animate-fadeIn">{avatars[currentIndex].description}</p>
+        </div>
+
         {/* Avatar indicator dots */}
         <div className="flex justify-center mt-4 space-x-1">
           {avatars.slice(0, 8).map((_, index) => (

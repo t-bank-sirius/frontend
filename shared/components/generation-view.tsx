@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { RotateCcw, Edit, Check } from "lucide-react"
 import { CreateCharacter } from "@/enities/Character/types/character.interface"
 import { userService } from "@/features/User/service/user.service"
+import { LoadingButton } from "./generation-button"
 
 interface GenerationViewProps {
   characterData: CreateCharacter
@@ -15,6 +16,7 @@ interface GenerationViewProps {
 
 export function GenerationView({ characterData, setCharacterData, onRedo, onChange, onComplete }: GenerationViewProps) {
   const [isLoading, setIsLoading] = useState(true)
+  const [isCompleting, setCompleting] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   function convertBase64ToBlob(base64Image: string) {
   // Split into two parts
@@ -52,7 +54,9 @@ export function GenerationView({ characterData, setCharacterData, onRedo, onChan
 
   }, [])
   const complete = async () => {
+    setCompleting(true)
     await onComplete()
+    setCompleting(false)
     window.location.href = "/assistants"
   }
 
@@ -130,20 +134,15 @@ export function GenerationView({ characterData, setCharacterData, onRedo, onChan
                 <span>Изменить</span>
               </button>
             </div>
-            <button
-              onClick={async () => await complete()}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center space-x-2"
-            >
-              <Check size={18} />
-              <span>Отлично!</span>
-            </button>
+            <LoadingButton onClick={async () => await complete()} isLoading={isCompleting} className="w-full">
+              <div className="flex items-center justify-center space-x-2">
+                <Check size={18} />
+                <span>Готово!</span>
+              </div>
+            </LoadingButton>
           </div>
         )}
       </div>
     </>
   )
 }
-    function convertBase64ToBlob(image: string) {
-      throw new Error("Function not implemented.")
-    }
-

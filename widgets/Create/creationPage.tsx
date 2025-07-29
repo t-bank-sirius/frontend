@@ -144,6 +144,7 @@ export default function CreateACharacter() {
               characterData={characterData}
               setCharacterData={setCharacterData}
               onRedo={() => setCurrentStep("generation")}
+              setCurrentStep={setCurrentStep}
               onChange={handleBackToForm}
               onComplete={handleGenerationComplete}
             />

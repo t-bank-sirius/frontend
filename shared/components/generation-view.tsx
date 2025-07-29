@@ -1,5 +1,5 @@
 "use client"
-
+import toast from "react-hot-toast"
 import { useState, useEffect } from "react"
 import { RotateCcw, Edit, Check } from "lucide-react"
 import { CreateCharacter } from "@/enities/Character/types/character.interface"
@@ -12,9 +12,14 @@ interface GenerationViewProps {
   onChange: () => void
   onComplete: () => Promise<void>
   setCharacterData: any
+  setCurrentStep: any
 }
 
-export function GenerationView({ characterData, setCharacterData, onRedo, onChange, onComplete }: GenerationViewProps) {
+function hasError(res: any) {
+  return !res?.data?.image || res?.data?.error;
+}
+
+export function GenerationView({ characterData, setCurrentStep, setCharacterData, onRedo, onChange, onComplete }: GenerationViewProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isCompleting, setCompleting] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
@@ -39,15 +44,36 @@ export function GenerationView({ characterData, setCharacterData, onRedo, onChan
   // Return BLOB image after conversion
   return new Blob([uInt8Array], { type: imageType });
 }
-  const gen = async () => {
-    const data = await userService.createAvatar(characterData)
-    setIsLoading(false)
-      const blob = convertBase64ToBlob(data.data.image)
-      setGeneratedImage(URL.createObjectURL(blob))
-      console.log(generatedImage)
-      setCharacterData({...characterData, avatar_img_url: data.data.image})
-      console.log(characterData)
+const gen = async () => {
+  setIsLoading(true);
+
+  try {
+    const res = await userService.createAvatar(characterData);
+
+    if (hasError(res)) {
+      toast((res.data as any).error || 'Найдено что‑то плохое!')
+      setCurrentStep('form');
+      return;                        
+    }
+
+    const blob = convertBase64ToBlob(res.data.image);
+    if (!blob || blob.size === 0) {
+      toast('Ошибка при обработке изображения :(');
+      setCurrentStep('form');
+      return;
+    }
+
+    const url = URL.createObjectURL(blob);
+    setGeneratedImage(url);
+    setCharacterData({ ...characterData, avatar_img_url: res.data.image });
+  } catch (e) {
+    toast('Не удалось сгенерировать изображение');
+    setCurrentStep('form');
+  } finally {
+    setIsLoading(false);
   }
+};
+
   useEffect(() => {
     
     gen()
